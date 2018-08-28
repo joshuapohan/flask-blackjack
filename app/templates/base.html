@@ -1,0 +1,58 @@
+{% extends 'bootstrap/base.html' %}
+
+{% block styles %}
+{{super()}}
+  <link rel="stylesheet" href="{{url_for('.static', filename='customtheme.css')}}">
+  <link href="https://fonts.googleapis.com/css?family=Frank+Ruhl+Libre|Playfair+Display" rel="stylesheet">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
+  <link href='https://fonts.googleapis.com/css?family=Lobster+Two' rel='stylesheet' type='text/css'>	
+  <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
+{% endblock %}
+{% block title %}
+    {% if title %}{{ title }} - Jo's Blog{% else %}Welcome to Blackjack{% endif %}
+{% endblock %}
+
+{% block scripts %}
+	<script src="{{ url_for('.static', filename='js/util.js') }}"></script>
+  <script src="{{bootstrap_find_resource('jquery.js', cdn='jquery')}}"></script>
+  <script src="{{bootstrap_find_resource('js/bootstrap.js', cdn='bootstrap')}}"></script>
+{% endblock %}
+
+{% block navbar %}
+	<nav class="navbar navbar-dark navbar-bg" id="navigationbar" role="navigation">
+   		<div class="container">
+       		<div class="navbar-header">
+           		<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                  <span class="sr-only">Toggle navigation</span>
+                  <span class="icon-bar"></span>
+                  <span class="icon-bar"></span>
+                  <span class="icon-bar"></span>
+           		</button>
+           		<a class="navbar-brand link-no-style-white third-text-color main-text-font" href="{{ url_for('home') }}">Jo's Blog</a>
+       		</div>
+       		<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+           		<ul class="nav navbar-nav">
+               		<li><a href="{{ url_for('home') }}" class="third-text-color">Home</a></li>
+           		</ul>
+           		<ul class="nav navbar-nav navbar-right">
+               		{% if not current_user.is_anonymous %}
+               		<li><a href="{{ url_for('logout') }}" class="third-text-color">Logout</a></li>
+               		{% endif %}
+           		</ul>
+       		</div>
+   		</div>
+	</nav>
+{% endblock %}
+
+{% block content %}
+	<div class="container content">
+        {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            {% for message in messages %}
+            <div class="alert alert-info" role="alert">{{ message }}</div>
+            {% endfor %}
+        {% endif %}
+        {% endwith %}
+		{% block app_content  %}{% endblock %}
+	</div>
+{% endblock %}
