@@ -13,4 +13,4 @@ login = LoginManager(app)
 bootstrap = Bootstrap(app)
 
 from blackjack.app import routes
-from blackjack.app.models import card, deck, player, game
+from blackjack.app.models import deck, player, game

@@ -1,6 +1,13 @@
 from blackjack.app.models.cardtypes import CardSuit, CardRanks
+from blackjack.app.models.deck import CardSet, Deck, Hand
+from blackjack.app import db
 
-class Card():
+class Card(db.Model):
+
+    id = db.Column(db.Integer, primary_key=True)
+    deck_id = db.Column(db.Integer, enable_typechecks=False,db.ForeignKey('cardset.id'))
+    rank = db.Column(db.Enum(CardRanks))
+    suit = db.Column(db.Enum(CardSuit))
 
     def __init__(self, rank, suit):
         self.rank = rank
